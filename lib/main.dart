@@ -1,115 +1,248 @@
 import 'package:flutter/material.dart';
 
+// Variables
+late Surah currentSurah;
+
+final List<Surah> surahs = <Surah>[
+  Surah("Al-Fatihah (the Opening)"),
+  Surah("Al-Baqarah (the Cow)"),
+  Surah("Aali Imran (the Family of Imran)"),
+  Surah("An-Nisa’ (the Women)"),
+  Surah("Al-Ma’idah (the Table)"),
+  Surah("Al-An’am (the Cattle)"),
+  Surah("Al-A’raf (the Heights)"),
+  Surah("Al-Anfal (the Spoils of War)"),
+  Surah("At-Taubah (the Repentance)"),
+  Surah("Yunus (Yunus)"),
+  Surah("Hud (Hud)"),
+  Surah("Yusuf (Yusuf)"),
+  Surah("Ar-Ra’d (the Thunder)"),
+  Surah("Ibrahim (Ibrahim)"),
+  Surah("Al-Hijr (the Rocky Tract)"),
+  Surah("An-Nahl (the Bees)"),
+  Surah("Al-Isra’ (the Night Journey)"),
+  Surah("Al-Kahf (the Cave)"),
+  Surah("Maryam (Maryam)"),
+  Surah("Ta-Ha (Ta-Ha)"),
+  Surah("Al-Anbiya’ (the Prophets)"),
+  Surah("Al-Haj (the Pilgrimage)"),
+  Surah("Al-Mu’minun (the Believers)"),
+  Surah("An-Nur (the Light)"),
+  Surah("Al-Furqan (the Criterion)"),
+  Surah("Ash-Shu’ara’ (the Poets)"),
+  Surah("An-Naml (the Ants)"),
+  Surah("Al-Qasas (the Stories)"),
+  Surah("Al-Ankabut (the Spider)"),
+  Surah("Ar-Rum (the Romans)"),
+  Surah("Luqman (Luqman)"),
+  Surah("As-Sajdah (the Prostration)"),
+  Surah("Al-Ahzab (the Combined Forces)"),
+  Surah("Saba’ (the Sabeans)"),
+  Surah("Al-Fatir (the Originator)"),
+  Surah("Ya-Sin (Ya-Sin)"),
+  Surah("As-Saffah (Those Ranges in Ranks)"),
+  Surah("Sad (Sad)"),
+  Surah("Az-Zumar (the Groups)"),
+  Surah("Ghafar (the Forgiver)"),
+  Surah("Fusilat (Distinguished)"),
+  Surah("Ash-Shura (the Consultation)"),
+  Surah("Az-Zukhruf (the Gold)"),
+  Surah("Ad-Dukhan (the Smoke)"),
+  Surah("Al-Jathiyah (the Kneeling)"),
+  Surah("Al-Ahqaf (the Valley)"),
+  Surah("Muhammad (Muhammad)"),
+  Surah("Al-Fat’h (the Victory)"),
+  Surah("Al-Hujurat (the Dwellings)"),
+  Surah("Qaf (Qaf)"),
+  Surah("Adz-Dzariyah (the Scatterers)"),
+  Surah("At-Tur (the Mount)"),
+  Surah("An-Najm (the Star)"),
+  Surah("Al-Qamar (the Moon)"),
+  Surah("Ar-Rahman (the Most Gracious)"),
+  Surah("Al-Waqi’ah (the Event)"),
+  Surah("Al-Hadid (the Iron)"),
+  Surah("Al-Mujadilah (the Reasoning)"),
+  Surah("Al-Hashr (the Gathering)"),
+  Surah("Al-Mumtahanah (the Tested)"),
+  Surah("As-Saf (the Row)"),
+  Surah("Al-Jum’ah (Friday)"),
+  Surah("Al-Munafiqun (the Hypocrites)"),
+  Surah("At-Taghabun (the Loss & Gain)"),
+  Surah("At-Talaq (the Divorce)"),
+  Surah("At-Tahrim (the Prohibition)"),
+  Surah("Al-Mulk – (the Kingdom)"),
+  Surah("Al-Qalam (the Pen)"),
+  Surah("Al-Haqqah (the Inevitable)"),
+  Surah("Al-Ma’arij (the Elevated Passages)"),
+  Surah("Nuh (Nuh)"),
+  Surah("Al-Jinn (the Jinn)"),
+  Surah("Al-Muzammil (the Wrapped)"),
+  Surah("Al-Mudaththir (the Cloaked)"),
+  Surah("Al-Qiyamah (the Resurrection)"),
+  Surah("Al-Insan (the Human)"),
+  Surah("Al-Mursalat (Those Sent Forth)"),
+  Surah("An-Naba’ (the Great News)"),
+  Surah("An-Nazi’at (Those Who Pull Out)"),
+  Surah("‘Abasa (He Frowned)"),
+  Surah("At-Takwir (the Overthrowing)"),
+  Surah("Al-Infitar (the Cleaving)"),
+  Surah("Al-Mutaffifin (Those Who Deal in Fraud)"),
+  Surah("Al-Inshiqaq (the Splitting Asunder)"),
+  Surah("Al-Buruj (the Stars)"),
+  Surah("At-Tariq (the Nightcomer)"),
+  Surah("Al-A’la (the Most High)"),
+  Surah("Al-Ghashiyah (the Overwhelming)"),
+  Surah("Al-Fajr (the Dawn)"),
+  Surah("Al-Balad (the City)"),
+  Surah("Ash-Shams (the Sun)"),
+  Surah("Al-Layl (the Night)"),
+  Surah("Adh-Dhuha (the Forenoon)"),
+  Surah("Al-Inshirah (the Opening Forth)"),
+  Surah("At-Tin (the Fig)"),
+  Surah("Al-‘Alaq (the Clot)"),
+  Surah("Al-Qadar (the Night of Decree)"),
+  Surah("Al-Bayinah (the Proof)"),
+  Surah("Az-Zalzalah (the Earthquake)"),
+  Surah("Al-‘Adiyah (the Runners)"),
+  Surah("Al-Qari’ah (the Striking Hour)"),
+  Surah("At-Takathur (the Piling Up)"),
+  Surah("Al-‘Asr (the Time)"),
+  Surah("Al-Humazah (the Slanderer)"),
+  Surah("Al-Fil (the Elephant)"),
+  Surah("Quraish (Quraish)"),
+  Surah("Al-Ma’un (the Assistance)"),
+  Surah("Al-Kauthar (the River of Abundance)"),
+  Surah("Al-Kafirun (the Disbelievers)"),
+  Surah("An-Nasr (the Help)"),
+  Surah("Al-Masad (the Palm Fiber)"),
+  Surah("Al-Ikhlas (the Sincerity)"),
+  Surah("Al-Falaq (the Daybreak)"),
+  Surah("An-Nas (Mankind)"),
+];
+
 void main() {
-  runApp(const MyApp());
+  runApp(const Main());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Main extends StatelessWidget {
+  const Main({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Aayath darse quran',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: _SurahsList(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
+class _SurahsList extends StatefulWidget {
+	_SurahsListState createState() => _SurahsListState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+class _SurahsListState extends State<_SurahsList>{
+	@override
+	Widget build(BuildContext context){
+		return Scaffold(
+			backgroundColor: Colors.blueGrey[700],
+			appBar: AppBar(
+				title: const Text("Surahs"),
+				centerTitle: true,
+				backgroundColor: Colors.blueGrey,
+			),
+			body: ListView.builder(
+			  padding: const EdgeInsets.all(8),
+	  	  itemCount: 114,
+				itemBuilder: (BuildContext context, int index) {
+					return Container(
+						height: 50,
+				  	padding: const EdgeInsets.all(2),
+						child: ElevatedButton(
+							onPressed: (){
+								Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+										currentSurah =  surahs.elementAt(index);
+                    return _AayatsList();
+                }));
+							},
+							child: Text(surahs.elementAt(index).getName()),
+						),
+					);
+				},
+			)
+		);
   }
+}
 
-  @override
+class _AayatsList extends StatelessWidget{
+	@override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+		return Scaffold(
+		  appBar: AppBar(title: Text(currentSurah.getName())),
+			body:Container(
+				width: MediaQuery.of(context).size.width,
+				height: 100,
+				padding: const EdgeInsets.all(2),
+				child: Card(
+					shape: RoundedRectangleBorder(  
+            borderRadius: BorderRadius.circular(15.0),  
+          ),  
+					elevation: 50,
+
+					shadowColor: Colors.black,					
+					color: Colors.blueGrey,
+
+					child: Center(
+						child: ListTile(
+							leading: Image.network(
+								"https://i.ytimg.com/vi/O3ZUDDs9uo4/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAwInsAXExIcKBofURGaDN8_Aa3Vw",
+								fit: BoxFit.fill,
+							),
+							title: Text("Ayats: " + currentSurah.getAyat(0), textScaleFactor: 1.5,),
+							subtitle: Text("Time: " + currentSurah.getTime(), textScaleFactor: 1.2,),
+							trailing: Icon(Icons.radio_button_unchecked),
+						),
+					),
+				),
+			),
+         // body: Container(
+            // alignment: Alignment.topCenter,
+            // padding: const EdgeInsets.all(30),
+            // child: ElevatedButton(
+               // onPressed: (){
+                  // Navigator.pop(context);
+               // },
+               // child: const Text("Go Back"),
+            // ),
+         // ),
+     );
   }
+}
+ 
+
+class Surah {
+	late String name;
+	String time = "2:20:09";
+	List ayats = ["1-10"];
+
+	Surah(name) {
+		this.name = name;
+		this.ayats = ayats;
+		this.time = time;
+	}
+
+	String getName(){
+		return this.name.toString();
+	}
+
+	String getAyat(index){
+		return this.ayats.elementAt(index).toString();
+	}
+
+	String getTime(){
+		return this.time;
+	}
 }
