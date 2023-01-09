@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:aayath_darse_quran/models/channel_info.dart';
 import 'package:aayath_darse_quran/models/videos_list.dart';
+import 'package:aayath_darse_quran/models/play_lists_info.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
@@ -30,6 +31,25 @@ class Services {
     // print(response.body);
     ChannelInfo channelInfo = channelInfoFromJson(response.body);
     return channelInfo;
+  }
+
+  static Future<PlayListsInfo?> getPlaylistsInfo() async {
+    Map<String, String> parameters = {
+      'part': 'snippet,contentDetails',
+      'channelId': CHANNEL_ID,
+      'key': API_KEY,
+    };
+    Map<String, String> headers = {
+      HttpHeaders.contentTypeHeader: 'application/json',
+    };
+    Uri uri = Uri.https(
+      'youtube.googleapis.com',
+      '/youtube/v3/playlists',
+      parameters,
+    );
+    Response response = await http.get(uri, headers: headers);
+    PlayListsInfo? playListsInfo = playListsInfoFromJson(response.body);
+    return playListsInfo;
   }
 
   static Future<VideosList> getVideosList(

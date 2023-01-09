@@ -1,3 +1,4 @@
+import 'package:aayath_darse_quran/models/play_lists_info.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:aayath_darse_quran/models/channel_info.dart';
@@ -13,7 +14,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   //
   ChannelInfo? _channelInfo;
+	PlayListsInfo? _playListsInfo;
   VideosList? _videosList;
+	PlayListItem? _playListItem;
   Item? _item;
   bool? _loading;
   String? _playListId;
@@ -33,8 +36,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _getChannelInfo() async {
     _channelInfo = await Services.getChannelInfo();
+		_playListsInfo = await Services.getPlaylistsInfo();
     _item = _channelInfo!.items![0];
-    _playListId = _item!.contentDetails!.relatedPlaylists!.uploads!;
+		//_playListItem = _playListsInfo!.playListItems![0];
+    _playListId = _playListsInfo!.playListItems![4]!.id;
     print('_playListId $_playListId');
     await _loadVideos();
     setState(() {
