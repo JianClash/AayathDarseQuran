@@ -44,4 +44,4 @@ app.*.map.json
 /android/app/release
 
 #Key
-lib/utilities/keys.dart
+lib/utils/keys.dart
