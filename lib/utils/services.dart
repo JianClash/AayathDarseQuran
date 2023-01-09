@@ -33,11 +33,14 @@ class Services {
     return channelInfo;
   }
 
-  static Future<PlayListsInfo?> getPlaylistsInfo() async {
+	static Future<PlayListsInfo?> getPlaylistsInfo(
+		{String? pageToken}) async {
     Map<String, String> parameters = {
       'part': 'snippet,contentDetails',
       'channelId': CHANNEL_ID,
       'key': API_KEY,
+			'maxResults': '8',
+			'pageToken': pageToken!,
     };
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
@@ -50,7 +53,7 @@ class Services {
     Response response = await http.get(uri, headers: headers);
     PlayListsInfo? playListsInfo = playListsInfoFromJson(response.body);
     return playListsInfo;
-  }
+ }
 
   static Future<VideosList> getVideosList(
       {String? playListId, String? pageToken}) async {
